@@ -1,5 +1,31 @@
 #include "sort.h"
 /**
+ * sort_with_gap - sorts an array of integers using a combination
+ * of shell sort algorithm and Knuth sequence
+ * @arr: array to sort
+ * @size: length of the array
+ * @gap: gap to use for comparison
+ * Return: nothing
+ */
+void sort_with_gap(int *arr, int size, int gap)
+{
+	int temp, i, j;
+
+	for (i = 0; (i + gap) < size; i++)
+	{
+		for (j = i + gap; (j - gap) >= 0; j -= gap)
+		{
+			if (arr[j] < arr[j - gap])
+			{
+				temp = arr[j];
+				arr[j] = arr[j - gap];
+				arr[j - gap] = temp;
+			}
+		}
+	}
+	print_array(arr, size);
+}
+/**
  * shell_sort - sorts an array of integers using a combination
  * of shell sort algorithm and Knuth sequence
  * @array: array to sort
@@ -8,28 +34,15 @@
  */
 void shell_sort(int *array, size_t size)
 {
-	int temp;
-	size_t i, j, gap;
+	size_t gap = 1;
 
-	gap = 1;
 	while (gap < size)
 	{
-		gap = 3 * gap + 1;
+		gap = gap * 3 + 1;
 	}
-	while (gap > 0)
+
+	while ((gap = (gap - 1) / 3) > 0)
 	{
-		for (i = gap; i < size; i++)
-		{
-			j = i;
-			while (j >= gap && array[j - gap] > array[j])
-			{
-				temp = array[j];
-				array[j] = array[j - gap];
-				array[j - gap] = temp;
-				j -= gap;
-			}
-		}
-		gap /= 3;
-		print_array(array, size);
+		sort_with_gap(array, size, gap);
 	}
 }
