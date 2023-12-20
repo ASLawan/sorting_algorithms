@@ -33,7 +33,6 @@ void counting_sort(int *array, size_t size)
 	/*get the positions*/
 	for (i = 1; i <= max; i++)
 		count_arr[i] = count_arr[i] + count_arr[i - 1];
-
 	print_array(count_arr, (max + 1));
 	sorted_arr = malloc(sizeof(int) * size);
 	if (sorted_arr == NULL)
@@ -41,8 +40,6 @@ void counting_sort(int *array, size_t size)
 		free(count_arr);
 		return;
 	}
-	/*for (i = (int)size - 1; i > 0; i--)*/
-		/*sorted_arr[--count_arr[array[i]]] = array[i];*/
 	for (i = 0; i < (int)size; i++)
 	{
 		sorted_arr[count_arr[array[i]] - 1] = array[i];
